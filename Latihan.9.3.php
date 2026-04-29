@@ -1,0 +1,79 @@
+<?php
+
+// buat class komputer
+class komputer {
+
+    // property dengan hak akses
+    private $jenis_processor = "Intel Core i7-4790 3.6GHz";
+    protected $jenis_RAM = "DDR 4";
+    public $jenis_VGA = "PCI Express";
+
+    public function tampilkan_processor() {
+        return $this->jenis_processor;
+    }
+
+    public function tampilkan_jenisprocessor() {
+        return $this->jenis_processor;
+    }
+
+    private function tampilkan_ram() {
+        return $this->jenis_RAM;
+    }
+
+    protected function tampilkan_vga() {
+        return $this->jenis_VGA;
+    }
+
+    public function tampilkan_vga2() {
+        return $this->jenis_VGA;
+    }
+}
+
+// buat class laptop
+class laptop extends komputer {
+
+    public function display_processor() {
+        return $this->jenis_processor; // ERROR jika private → diperbaiki di bawah
+    }
+
+    public function display_processor2() {
+        return $this->tampilkan_processor();
+    }
+
+    public function display_ram() {
+        return $this->jenis_RAM;
+    }
+
+    public function display_ram2() {
+        // method private tidak bisa diakses, jadi kita akses property saja
+        return $this->jenis_RAM;
+    }
+
+    public function display_vga() {
+        return $this->tampilkan_vga2();
+    }
+
+    private function display_processorkomputer() {
+        return $this->tampilkan_processor();
+    }
+
+    // tambahkan wrapper agar bisa dipanggil dari luar
+    public function tampilkan_processorkomputer() {
+        return $this->display_processorkomputer();
+    }
+}
+
+// buat objek dari class
+$komputer = new komputer();
+$laptop = new laptop();
+
+// jalankan method
+echo "Line 61 : " . $komputer->tampilkan_processor() . "<br />";
+echo "Line 62 : " . $laptop->display_processor2() . "<br />";
+echo "Line 63 : " . $laptop->display_processor2() . "<br />";
+echo "Line 64 : " . $laptop->tampilkan_jenisprocessor() . "<br />";
+echo "Line 65 : " . $laptop->display_ram() . "<br />";
+echo "Line 66 : " . $laptop->display_vga() . "<br />";
+echo "Line 67 : " . $laptop->tampilkan_processorkomputer() . "<br />";
+
+?>
